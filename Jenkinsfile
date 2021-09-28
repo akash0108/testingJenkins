@@ -6,15 +6,15 @@ pipeline {
     stages{
         stage ("build Jar"){
             steps {
-                script(
+                script{
                     echo "Building the application"
                     sh 'mvn package'
-                )
+                }
             }
         }
         stage ("Docker image"){
             steps {
-                script(
+                script{
                     echo "Building the Docker image"
                     withCredentials([usernamePassword(creddentialsID:'docker-credentials',passwordVariable: 'PASS',usernameVariable: 'USER')]){
                         sh 'docker build -t akash41287/mishra:jenkinsPipeline .'
@@ -22,7 +22,7 @@ pipeline {
                         sh 'docker push akash41287/mishra:jenkinsPipeline'
                     }
                     
-                )
+                }
             }
         }
         stage ("deploy"){
