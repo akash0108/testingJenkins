@@ -16,11 +16,11 @@ pipeline {
             steps {
                 script{
                     echo "Building the Docker image"
-                    withCredentials([usernamePassword(creddentialsID:'docker-credentials',passwordVariable: 'PASS',usernameVariable: 'USER')]){
-                        sh 'docker build -t akash41287/mishra:jenkinsPipeline .'
-                        sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh 'docker push akash41287/mishra:jenkinsPipeline'
-                    }
+                    withCredentials([usernamePassword(credentialsId: 'docker-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    sh 'docker build -t akash41287.mishra:TestingJenkins .'
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
+                    sh 'docker push akash41287.mishra:TestingJenkins'
+                      }
                     
                 }
             }
