@@ -3,19 +3,12 @@ pipeline {
     stages{
         stage ("build Jar"){
             steps {
-                script(
                     echo "Building the application"
-                    
-                )
             }
         }
         stage ("testing"){
             steps {
-                script(
                     echo "Building the Docker image"
-                    
-                    
-                )
             }
         }
         stage ("deploy"){
