@@ -1,38 +1,34 @@
-def gv
-
 pipeline {
-    agent any
-    stages {
-        stage("init") {
+    agent any 
+    tools{
+        maven 'maven'
+    }
+    stages{
+        stage ("build Jar"){
             steps {
-                script {
-                    gv = load "script.groovy"
-                }
+                script(
+                    echo "Building the application"
+                    sh 'mvn package'
+                )
             }
         }
-        stage("build jar") {
+        tage ("build Jar"){
             steps {
-                script {
-                    echo "building jar"
-                    //gv.buildJar()
-                }
+                script(
+                    echo "Building the Docker image"
+                    withCredentials([usernamePassword(creddentialsID:'docker-credentials',passwordVariable: 'PASS',usernameVariable: 'USER')]){
+                        sh 'docker build -t akash41287/mishra:jenkinsPipeline .'
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh 'docker push akash41287/mishra:jenkinsPipeline  '
+                    }
+                    
+                )
             }
         }
-        stage("build image") {
+        stage ("deploy"){
             steps {
-                script {
-                    echo "building image"
-                    //gv.buildImage()
-                }
+                echo "deploy App"
             }
         }
-        stage("deploy") {
-            steps {
-                script {
-                    echo "deploying"
-                    //gv.deployApp()
-                }
-            }
-        }
-    }   
+    }
 }
