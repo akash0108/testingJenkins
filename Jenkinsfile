@@ -9,7 +9,7 @@ pipeline {
                 )
             }
         }
-        tage ("build Jar"){
+        stage ("testing"){
             steps {
                 script(
                     echo "Building the Docker image"
